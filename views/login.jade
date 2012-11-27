@@ -1,0 +1,30 @@
+extends layout
+
+block content
+	-if(error)
+		.alert.alert-error
+			| #{error}
+	-else
+	section
+		h2 Login
+		form#form_login(action='/user/login/', style='margin: 0; padding: 3px 15px;', accept-charset='utf-8', method='post')
+			fieldset.control-group
+				label.control-label(for='form_email') Email address
+				.controls
+					.input-prepend(style='white-space: nowrap;')
+						span.add-on
+							i.icon-envelope
+						input#form_email.span2(type='email', name='email', autocomplete='on')
+			fieldset.control-group
+				label.control-label(for='form_password') Password
+				.controls
+					.input-prepend(style='white-space: nowrap;')
+						span.add-on
+							i.icon-lock
+						input#form_password.span2(type='password', name='password')
+			label.checkbox
+				input(type='checkbox', name='remember', value='true')
+				| Remember me
+			input(type='hidden', name='_csrf', value='#{token}')
+			p.navbar-text
+				button.btn.btn-primary(type='submit') Login

@@ -1,0 +1,20 @@
+{
+    "name":"expressSimpleBlog",
+    "description":"Simple Blog example with Express, Jade, Mongoose",
+    "author":"Hüseyin BABAL <huseyinbabal88@gmail.com>",
+    "version":"0.0.1",
+    "private":false,
+    "scripts":{
+        "start":"node app"
+    },
+    "dependencies":{
+        "express":"3.0.3",
+        "jade":"*",
+        "mongoose":"3.4.0",
+        "connect-mongo":"0.2.0",
+        "config":"0.4.18",
+        "util":"0.4.9",
+        "devnull":"0.0.9",
+        "async":"0.1.22"
+    }
+}

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	section#tables
+		-if(error)
+			.alert.alert-error
+				| #{error}
+			h2 New blog post
+			form(style='padding-bottom: 15px;', action='/blog/create/', method='POST')
+				.controls
+					input.input-xxlarge(type='text', placeholder='Post Title', name='title')
+				.controls
+					textarea(rows='10', name='text')
+				input(type='hidden', name='_csrf', value='#{token}')
+				.form-actions
+					button.btn.btn-primary(type='submit') Create post
+					button.btn(type='button') Cancel
+		-else
+			h2 New blog post
+			form(style='padding-bottom: 15px;', action='/blog/create/', method='POST')
+				.controls
+					input.input-xxlarge(type='text', placeholder='Post Title', name='title')
+				.controls
+					textarea(rows='10', name='text')
+				input(type='hidden', name='_csrf', value='#{token}')
+				.form-actions
+					button.btn.btn-primary(type='submit') Create post
+					button.btn(type='button') Cancel

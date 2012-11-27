@@ -1,0 +1,33 @@
+extends layout
+
+block content
+	section#tables
+		h2 #{blogInfo.title}
+		p
+			| #{blogInfo.text}
+		h3 Comments
+		-if(blogInfo.comments.length > 0)
+			-each comment, i in blogInfo.comments
+				.media
+					.media-body
+						.media-heading
+							h4 #{comment.text}
+						p
+							| by #{comment.author} on #{comment.createDate}
+			form(style='padding-bottom: 15px;', action='/blog/comment', method='POST')
+				.controls
+					textarea(rows='10', name='text')
+				input(type='hidden', name='blogID', value='#{blogInfo._id}')
+				input(type='hidden', name='_csrf', value='#{token}')
+				.form-actions
+					button.btn.btn-primary(type='submit') Post comment
+		-else
+			.alert.alert-block
+				| No comments
+			form(style='padding-bottom: 15px;', action='/blog/comment', method='POST')
+				.controls
+					textarea(rows='10', name='text')
+				input(type='hidden', name='blogID', value='#{blogInfo._id}')
+				input(type='hidden', name='_csrf', value='#{token}')
+				.form-actions
+					button.btn.btn-primary(type='submit') Post comment

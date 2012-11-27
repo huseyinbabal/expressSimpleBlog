@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	section#tables
+		h2 Latest blog posts
+		div
+			-if(blogPosts.length > 0)
+				table.table
+					thead
+						tr
+							th #
+							th Title
+							th Author
+							th Date
+					tbody
+					-each blogpost, i in blogPosts
+						tr
+							td #{i+1}
+							td
+								a(href='/blog/#{blogpost._id}/view')
+									| #{blogpost.title}
+							td @#{blogpost.author}
+							td #{blogpost.createDate}
+			-else
+				.alert.alert-block
+				| There is no recent post

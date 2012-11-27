@@ -49,8 +49,13 @@ app.configure('all', function () {
 
 // Error handling setup
 app.configure('development', function () {
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function() {
     app.use(express.errorHandler());
 });
+
 
 // Register models
 require('./models/Blog')(mongoose);

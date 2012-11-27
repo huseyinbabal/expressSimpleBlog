@@ -15,6 +15,8 @@
         "config":"0.4.18",
         "util":"0.4.9",
         "devnull":"0.0.9",
-        "async":"0.1.22"
+        "async":"0.1.22",
+        "crypto":"0.0.3",
+        "underscore":"1.4.2"
     }
 }

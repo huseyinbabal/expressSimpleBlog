@@ -223,3 +223,15 @@ Quick links ;
             
             }
 ```
+
+## MongoDB credentials setp for project
+In this project some user authentication methods have been used, so you can seup your mongodb user for your db;
+```javascript
+  mongo localhost
+
+  use <blog>
+
+  db.addUser("test", "123456")
+```
+
+Added user `test` for b `blog`. This will be used in project config

@@ -235,3 +235,82 @@ In this project some user authentication methods have been used, so you can seup
 ```
 
 Added user `test` for b `blog`. This will be used in project config
+
+## Nested functions to waterfall
+In express applications, there is a view problem on nested functions. Let's eee it in an example;
+```javascript
+  Model1.findOne({username: "johndoe"}, function(err, userInfo) {
+    if (err) {
+      ........
+    } else {
+      Model2.find({age: userInfo.age}, function(err, model2Info) {
+        if(err) {
+          ......
+        } else {
+          Model3.find({something: model2Info.count}, function(err, model3Info) {
+            if (err) {
+              ........
+            } else {
+              .................
+              ............
+              ..............
+              //4 more nested function
+              Model8.find({}, function(err, someInfo) {
+                if(err) ............
+                else
+                  next("I have found the result but i don't want to use this result because of this nasty nested function!!!");
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+```
+
+In real projects, there are such cases, so our hero on this case is;
+
+[step](https://github.com/creationix/step)
+or
+[async](https://github.com/caolan/async)
+
+I prefer async, because i used them and async wins :) async also has 3466 stars but step has 1091. 
+There are several ways to re-implement above nested function by using async. We can use waterfall model(For more info please refer to project github documentation)
+
+```javascript
+  async.waterfall([
+    function(callback) {
+      Model1.findOne({username: "johndoe"}, function(err, userInfo) {
+        callback(null, userInfo);
+      });    
+    },
+    function(userInfo, callback) {
+      Model2.find({age: userInfo.age}, function(err, model2Info) {
+        callback(null, model2Info);
+      
+      });
+    },
+    function(model2Info, callback) {
+      Model3.find({something: model2Info.count}, function(err, model3Info) {
+        var dummy = 15;
+        callback(null, model3Info, dummy);
+      });
+      
+    },
+    function(modelInfo, count, callback) {
+      var some = foo(modelInfo, count);
+      callback(null, some);
+    },
+    ..........................
+    ......................
+    ,
+    function(modelInfo, callback) {
+      callback(null, modelInfo);  
+    }
+    ], function(err, result) {
+      if (err) .......
+      else
+        next("Result found and i am happy to use this result");
+    });
+```
+

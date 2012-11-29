@@ -214,7 +214,10 @@ Quick links ;
             },
             {
                 $inc: {'projects.$.cost': 200}
-            }, function(err, result) {
+            },
+            //In order to update all documents. If you set this false, it will update only first found document
+            {multi: true},
+            function(err, result) {
               if (err) {
                 next("Technical error occured");
               } else {

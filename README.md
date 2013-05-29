@@ -227,7 +227,7 @@ Quick links ;
             }
 ```
 
-## MongoDB credentials setp for project
+## MongoDB credentials setup for project
 In this project some user authentication methods have been used, so you can seup your mongodb user for your db;
 ```javascript
   mongo localhost

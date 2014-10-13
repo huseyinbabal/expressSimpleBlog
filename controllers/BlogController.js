@@ -36,6 +36,17 @@ BlogController = function (app, mongoose, config) {
         });
     });
 
+
+
+    function slugify(text) {
+        return text.toString().toLowerCase()
+          .replace(/\s+/g, '-')        // Replace spaces with -
+          .replace(/[^\w\-]+/g, '')    // Remove all non-word chars
+          .replace(/\-\-+/g, '-')      // Replace multiple - with single -
+          .replace(/^-+/, '')          // Trim - from start of text
+          .replace(/-+$/, '');         // Trim - from end of text
+    }    
+
     /**
      *
      */
@@ -47,6 +58,10 @@ BlogController = function (app, mongoose, config) {
         blogModel.title = title;
         blogModel.text = text;
         blogModel.author = req.session.user.username;
+        blogModel.pre('save', function (next) {
+            this.slug = slugify(this.title);
+            next(); 
+        });
         blogModel.save(function(err) {
             if (err) {
                 res.status(500);
@@ -60,9 +75,11 @@ BlogController = function (app, mongoose, config) {
         });
     });
 
-    app.get('/blog/:blogID/view/?', function(req, res, next) {
+    app.get('/blog/:blogID/?', function(req, res, next) {
         util.log(req.method + " request to url : " + req.route.path);
-        Blog.findOne({_id: req.params.blogID}, function(err, blogInfo) {
+        var slug = req.params.slug;
+        
+        Blog.findOne({slug: slug}, function(err, blogInfo) {
             if (blogInfo) {
                 res.render('blog-detail', {
                     title: blogInfo.title,

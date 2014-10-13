@@ -17,7 +17,7 @@ block content
 						tr
 							td #{i+1}
 							td
-								a(href='/blog/#{blogpost._id}/view')
+								a(href='/blog/#{blogpost.slug}/')
 									| #{blogpost.title}
 							td @#{blogpost.author}
 							td #{blogpost.createDate}
